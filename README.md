@@ -4,4 +4,4 @@ Changing History is an expansion for KSP Realism Overhaul and Realistic Progress
 
 ![Changing History Patch](https://i.imgur.com/pRcXo4n.png)
 
-                                                                  **Translation: Moving forward, forever**
+**Translation: Moving forward, forever**
