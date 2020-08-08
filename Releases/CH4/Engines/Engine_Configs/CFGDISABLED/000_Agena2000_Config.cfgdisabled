@@ -1,0 +1,79 @@
+//  Agena 2000
+//	ROEngines
+//
+// ------Sources--------
+//	(1) Design and test results on Agena 2000: https://www.pdf-archive.com/2017/05/31/design-and-test-results-on-agena-2000/design-and-test-results-on-agena-2000.pdf
+//
+
+@PART[*]:HAS[#engineType[Agena2000]]:FOR[RealismOverhaulEngines]
+{
+	@title = Agena 2000 Engine
+	@manufacturer = Aerojet
+	@description = Proposed in the early 2000s, this engine would be used on the upper stage of Atlas V Light rocket. Diameter: [1.9 m].
+  
+	!MODULE[ModuleAlternator] {}
+	!RESOURCE,* {}
+  
+	MODULE
+	{
+		name = ModuleEngineConfigs
+		type = ModuleEngines
+		configuration = Agena-2000
+		modded = false
+		origMass = 0.185
+		CONFIG
+		{
+			name = Agena-2000
+			maxThrust = 67.48 //15 klbf
+			minThrust = 67.48
+			heatProduction = 100
+			PROPELLANT
+			{
+				name = MMH
+				ratio = 0.4691
+				DrawGauge = True
+			}
+			PROPELLANT
+			{
+				name = MON3
+				ratio = 0.5309
+			}
+			atmosphereCurve
+			{
+				key = 0 336
+				key = 1 100
+			}
+			ullage = True
+			pressureFed = False
+			ignitions = 15
+			IGNITOR_RESOURCE
+			{
+				name = ElectricCharge
+				amount = 0.5
+			}
+		}		
+	}
+	
+	@MODULE[ModuleGimbal]
+	{
+		%gimbalRange = 5
+		%useGimbalResponseSpeed = true
+		%gimbalResponseSpeed = 16
+	}
+}
+
+@PART[*]:HAS[@MODULE[ModuleEngineConfigs]:HAS[@CONFIG[Agena-2000]],!MODULE[TestFlightInterop]]:BEFORE[zTestFlight]
+{
+	TESTFLIGHT
+	{
+		name = Agena-2000
+		ratedBurnTime = 750
+		ignitionReliabilityStart = 0.997
+		ignitionReliabilityEnd = 0.9995
+		ignitionDynPresFailMultiplier = 0.1
+		cycleReliabilityStart = 0.997
+		cycleReliabilityEnd = 0.9995
+		techTransfer = 
+		reliabilityDataRateMultiplier = 1
+	}
+}

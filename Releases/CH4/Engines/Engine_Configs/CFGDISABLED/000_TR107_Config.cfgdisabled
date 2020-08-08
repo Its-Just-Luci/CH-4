@@ -1,0 +1,89 @@
+//	==================================================
+//	TR-107 Series
+
+//  Sources:
+//		http://www.astronautix.com/t/tr-107.html
+//	==================================================
+
+@PART[*]:HAS[#engineType[TR107]]:FOR[RealismOverhaulEngines]
+{
+	%title = TR-107 Engine
+	%manufacturer = Northrop Grumman & TRW
+	%description = The TR-107 was a developmental rocket engine designed in 2002 by Northrop Grumman for NASA and DoD funded Space Launch Initiative. Operating on LOX/RP-1 the engine was throttleable and had a thrust of 4,900 kN at a chamber pressure of 17.7 megapascals (177 bar), making it one of the most powerful engines ever constructed. [2.45 m]
+	
+	MODULE
+	{
+		name = ModuleEngineConfigs
+		origMass = 5.129
+		configuration = TR-107
+		modded = false
+		CONFIG
+		{
+			name = TR-107
+			minThrust = 2405                           //45%
+			maxThrust = 5341
+			heatProduction = 100
+			PROPELLANT
+			{
+				name = Kerosene
+				ratio = 0.338
+				DrawGauge = true
+			}
+			PROPELLANT
+			{
+				name = LqdOxygen
+				ratio = 0.662
+			}
+			atmosphereCurve
+			{
+				key = 0 324
+				key = 1 305
+			}
+			
+			ullage = True
+			ignitions = 4
+			IGNITOR_RESOURCE
+			{
+				name = ElectricCharge
+				amount = 0.5
+			}
+			IGNITOR_RESOURCE
+			{
+				name = TEATEB
+				amount = 1
+			}
+		}		
+	}
+
+	@MODULE[ModuleGimbal]
+	{
+		@gimbalRange = 8
+		%useGimbalResponseSpeed = true
+		%gimbalResponseSpeed = 16
+	}
+
+	!MODULE[ModuleAlternator],*{}
+
+	!RESOURCE,*{}
+
+	RESOURCE
+	{
+		name = TEATEB
+		amount = 4.0
+		maxAmount = 4.0
+		isTweakable = False
+	}
+}
+
+@PART[*]:HAS[@MODULE[ModuleEngineConfigs]:HAS[@CONFIG[TR-107]],!MODULE[TestFlightInterop]]:BEFORE[zTestFlight]
+{
+	TESTFLIGHT
+	{
+		name = TR-107
+		ratedBurnTime = 300
+		ignitionReliabilityStart = 0.991
+		ignitionReliabilityEnd = 0.9995
+		cycleReliabilityStart = 0.991
+		cycleReliabilityEnd = 0.9995		
+	}
+}
